@@ -1,0 +1,12 @@
+body {
+    width: 180px;
+  }
+  button {
+    background-color: #5e3b81;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 6px;
+  }
