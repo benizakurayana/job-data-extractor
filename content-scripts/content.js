@@ -1,5 +1,10 @@
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'extractData') {
+    // meta-data
+    const jobUrl = $('link[rel="canonical"]').attr('href');
+    const id = jobUrl.substring(jobUrl.lastIndexOf('/') + 1);
+
     // ol.breadcrumb-list
     const breadcrumbItems = $('.breadcrumb-list__item');
     const company = breadcrumbItems.eq(1).find('a').text().trim();
@@ -40,6 +45,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const contactRemarks = $('.job-contact-table__head > h3:contains("其他")').parent().next().text().trim();
 
     const extractedData = {
+      jobUrl: jobUrl,
+      id: id,
       title: title,
       company: company,
       companyLink: companyLink,
@@ -71,6 +78,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     
   
     console.log(extractedData);
+
+    chrome.runtime.sendMessage({action: 'post', data: extractedData}, function() {});
+    
     
   }
 });
